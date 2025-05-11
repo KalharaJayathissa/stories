@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
+import {  useNavigate } from 'react-router-dom';
+
+export default function Types() {
+  const navigate = useNavigate();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ width: '100%', maxWidth: 500 ,margin: 'auto',position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>
+      
+      <Typography variant="h3" gutterBottom>
+        Go to the story here
+      </Typography>
+      <Button variant="contained" color="primary" onClick={() => navigate('/storypage')}>
+        Send
+      </Button>
+        
+      
+     
+    </Box>
   );
 }
-
-export default App;
