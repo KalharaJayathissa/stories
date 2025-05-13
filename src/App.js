@@ -14,7 +14,7 @@ export default function Types() {
         Go to the story here.
       </Typography>
       <Button variant="contained" color="primary" onClick={() => navigate('/storypage')}>
-        Send
+        GO
       </Button>
         
       
