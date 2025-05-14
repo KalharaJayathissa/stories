@@ -88,7 +88,10 @@ function Storypage() {
         background: "linear-gradient(to bottom, #cce0ff,  #3385ff)", // Gradient background
         height: "100vh",
         width: "100vw",
-        position: "fixed", // Ensures the page fully covers the viewport
+        display: "flex",
+        flexDirection: "column",
+        
+        alignItems: "center",
         top: 0,
         left: 0,
         overflow: "auto", // Allows scrolling if content exceeds the viewport
