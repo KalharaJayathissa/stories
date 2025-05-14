@@ -90,7 +90,7 @@ function Storypage() {
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-        
+
         alignItems: "center",
         top: 0,
         left: 0,
@@ -106,8 +106,11 @@ function Storypage() {
           >
             &lt; Home
           </Button>
-          <h1>Story Page</h1>
-          <p>This is the story page.</p>
+          <div
+          style={{padding: '15px',}}>
+            <h1>Story Page</h1>
+            <p>This is the story page.</p>
+          </div>
         </div>
         <Stcards tiles={tiles} />
       </Stack>
