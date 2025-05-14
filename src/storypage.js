@@ -7,6 +7,7 @@ import Stcards from "./stcards";
 function Storypage() {
     const navigate = useNavigate();
     return (
+        <div style={{ backgroundColor: "#d7e7e3", height: "100vh" }}>
         <Stack sx={{ backgroundColor: "#d7e7e3"}} spacing={2}>
             <div style={{ textAlign: "left", marginTop: "20px" , marginLeft: "20px"}}>
                 <Button variant="contained" color="primary" onClick={() => navigate('/')}>
@@ -17,6 +18,7 @@ function Storypage() {
             </div>
             <Stcards />
         </Stack>
+        </div>
     );
 }
 

@@ -39,9 +39,9 @@ const tiles = [
         console.log("Tile Clicked: ", id);
     }
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={1} padding={2} sx={{justifyContent: "center"}}>
             {tiles.map((tile, index) => (
-                <Grid item xs={12} sm={6} md={4} key={index}>
+                <Grid item xs={12} sx={{px: 5}} sm={6} md={4} key={index}>
                     <Card
                         onClick={() => handleClick(tile.id)}
                         sx={{
