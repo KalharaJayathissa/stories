@@ -6,6 +6,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import PropTypes from "prop-types"; // Import PropTypes
 
 export default function Stcards({ tiles }) {
   // Accept tiles as a prop
@@ -83,3 +84,14 @@ export default function Stcards({ tiles }) {
     </Box>
   );
 }
+
+// Add PropTypes validation [this is optional but recommended, only added to avoid warnings]
+Stcards.propTypes = {
+  tiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      title: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};

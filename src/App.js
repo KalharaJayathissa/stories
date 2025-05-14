@@ -9,7 +9,7 @@ export default function Types() {
   const tiles = [
     {
       id: 1,
-      title: "A Journey Through the Mountains",
+      title: "A Journey Throus",
       description: "A short story about discovery and survival.",
       image: "https://picsum.photos/id/1018/400/200",
     },
@@ -25,6 +25,12 @@ export default function Types() {
       description: "Stories from sailors lost and found.",
       image: "https://picsum.photos/id/1011/400/200",
     },
+    {
+      id: 12,
+      title: "The Desert Mirage",
+      description: "A journey through the scorching sands.",
+      image: "https://picsum.photos/id/1104/400/200",
+    },
   ];
 
   const handleClick = () => {
@@ -32,6 +38,7 @@ export default function Types() {
   };
 
   return (
+    <div>
     <Box
       className="container"
       sx={{
@@ -62,6 +69,7 @@ export default function Types() {
         }}
       />
       {/* Pass the tiles array as a prop to Stcards */}
+      
       <Stcards tiles={tiles} />
       <Button
         variant="contained"
@@ -79,5 +87,6 @@ export default function Types() {
         Read More..
       </Button>
     </Box>
+    </div>
   );
 }
