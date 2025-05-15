@@ -36,7 +36,7 @@ export default function Stcards({ tiles }) {
       flexDirection={"column"}
       sx={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", // Dynamically adjust card size
         gap: 3,
         padding: 2,
         paddingLeft: { xs: 0, sm: 2 }, // Remove left padding for mobile screens
@@ -70,10 +70,11 @@ export default function Stcards({ tiles }) {
                 sx={{
                   cursor: isLoaded ? "pointer" : "default",
                   transition: "transform 0.2s, box-shadow 0.2s",
-                  width: "100%",
-                  height: "100%",
+                  width: { xs: "250px", sm: "100%" }, // Smaller width for mobile screens
+                  height: { xs: "200px", sm: "100%" }, // Adjust height dynamically for mobile screens
                   display: "flex",
                   flexDirection: "column",
+                  margin: { xs: "0 auto", sm: "0" }, // Center cards horizontally on mobile screens
                   "&:hover": isLoaded && {
                     transform: "scale(1.05)",
                     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
