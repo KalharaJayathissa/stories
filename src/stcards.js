@@ -61,7 +61,7 @@ export default function Stcards({ tiles }) {
               md={4}
               key={tile.id}
               sx={{
-                px: { xs: 1, sm: 5 }, // Adjust horizontal padding for small screens
+                px: { sm: 1 }, // Adjust horizontal padding for small screens
                 py: 2,
               }}
             >
@@ -70,11 +70,11 @@ export default function Stcards({ tiles }) {
                 sx={{
                   cursor: isLoaded ? "pointer" : "default",
                   transition: "transform 0.2s, box-shadow 0.2s",
-                  width: { xs: "250px", sm: "100%" }, // Smaller width for mobile screens
-                  height: { xs: "200px", sm: "100%" }, // Adjust height dynamically for mobile screens
+                  width: { xs: "250px", sm: "300px" }, // Smaller width for mobile screens
+                  height: { xs: "200px", sm: "250px" }, // Adjust height dynamically for mobile screens
                   display: "flex",
                   flexDirection: "column",
-                  margin: { xs: "0 auto", sm: "0" }, // Center cards horizontally on mobile screens
+                  margin: { xs: "0 auto", sm: "0 auto" }, // Center cards horizontally on mobile screens
                   "&:hover": isLoaded && {
                     transform: "scale(1.05)",
                     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
