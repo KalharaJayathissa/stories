@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 
 export default function Stcards({ tiles }) {
   const [loadedImages, setLoadedImages] = useState({});
-  const [showTitles, setShowTitles] = useState(false); //for the name skelton
+  const [showTitles, setShowTitles] = useState(false); // for the name skeleton
 
   const handleClick = (id) => {
     console.log("Tile Clicked: ", id);
@@ -22,12 +22,11 @@ export default function Stcards({ tiles }) {
     setLoadedImages((prev) => ({ ...prev, [id]: true }));
   };
 
-  //timer to show story name skelton for 1 second (as avission illusion instead of
-  // waiting untillloading image)
+  // Timer to show story name skeleton for 1 second
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowTitles(true);
-    }, 300); //time takes to show name after the skeleton
+    }, 300); // Time takes to show name after the skeleton
 
     return () => clearTimeout(timer);
   }, []);
@@ -40,13 +39,15 @@ export default function Stcards({ tiles }) {
         gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
         gap: 3,
         padding: 2,
+        paddingLeft: { xs: 0, sm: 2 }, // Remove left padding for mobile screens
+        justifyContent: { xs: "center", sm: "flex-start" }, // Center cards for mobile screens
       }}
     >
       <Grid
         container
         spacing={3}
         sx={{
-          justifyContent: "flex-start",
+          justifyContent: { xs: "center", sm: "flex-start" }, // Center grid items for mobile screens
         }}
       >
         {tiles.map((tile) => {
@@ -56,19 +57,21 @@ export default function Stcards({ tiles }) {
             <Grid
               item
               xs={12}
-              sx={{ px: 5, py: 2 }}
               sm={6}
               md={4}
               key={tile.id}
-              dx={{ px: 1, py: 2 }}
+              sx={{
+                px: { xs: 1, sm: 5 }, // Adjust horizontal padding for small screens
+                py: 2,
+              }}
             >
               <Card
                 onClick={() => isLoaded && handleClick(tile.id)}
                 sx={{
                   cursor: isLoaded ? "pointer" : "default",
                   transition: "transform 0.2s, box-shadow 0.2s",
-                  width: "350px",
-                  height: "87%",
+                  width: "100%",
+                  height: "100%",
                   display: "flex",
                   flexDirection: "column",
                   "&:hover": isLoaded && {
@@ -78,7 +81,12 @@ export default function Stcards({ tiles }) {
                 }}
               >
                 {!isLoaded && (
-                  <Skeleton variant="rectangular" height={200} width="100%" />
+                  <Skeleton
+                    variant="rectangular"
+                    height={200}
+                    width="100%"
+                    sx={{ borderRadius: "4px" }} // Add rounded corners to the skeleton
+                  />
                 )}
                 <CardMedia
                   component="img"
