@@ -2,7 +2,7 @@ import Stcards from "./stcards";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Types() {
   const navigate = useNavigate();
@@ -56,23 +56,33 @@ export default function Types() {
       <Box
         className="container"
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          background: "linear-gradient(to bottom, #cce0ff,  #3385ff)", // Gradient background
           height: "100vh",
           width: "100vw",
-          position: "relative",
-          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+
+          alignItems: "center",
+          top: 0,
+          left: 0,
+          overflow: "auto", // Allows scrolling if content exceeds the viewport
         }}
       >
         <h1
-          style={{ alignSelf: "flex-start", marginLeft: "15px", color: "cyan" }}
+          style={{
+            alignSelf: "flex-start",
+            marginLeft: "15px",
+            color: "#000000",
+            fontSize: "45px",
+            fontFamily: " times-bold-italic",
+            fontStyle: "italic",
+          }}
         >
-          Hi
+          read Stories And feel the vibe...
         </h1>
+        <h3>Newly Added</h3>
 
-        {/* Background Image */}
+        {/* Background Image (Apply if needed)
         <Box
           sx={{
             position: "absolute",
@@ -87,7 +97,7 @@ export default function Types() {
             zIndex: -1, // Place it behind the content
             pointerEvents: "none", // Ensure it doesn't interfere with interactions
           }}
-        />
+        /> */}
         {/* Pass the tiles array as a prop to Stcards */}
 
         <Stcards tiles={tiles} />

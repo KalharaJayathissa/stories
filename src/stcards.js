@@ -8,10 +8,11 @@ import {
   Skeleton,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Stcards({ tiles }) {
   const [loadedImages, setLoadedImages] = useState({});
+  const [showTitles, setShowTitles] = useState(false); //for the name skelton
 
   const handleClick = (id) => {
     console.log("Tile Clicked: ", id);
@@ -21,22 +22,31 @@ export default function Stcards({ tiles }) {
     setLoadedImages((prev) => ({ ...prev, [id]: true }));
   };
 
+  //timer to show story name skelton for 1 second (as avission illusion instead of
+  // waiting untillloading image)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTitles(true);
+    }, 300); //time takes to show name after the skeleton
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Box
+      flexDirection={"column"}
       sx={{
-        height: "500px",
-        overflowY: "auto",
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+        gap: 3,
         padding: 2,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
       <Grid
         container
         spacing={3}
         sx={{
-          justifyContent: "center",
+          justifyContent: "flex-start",
         }}
       >
         {tiles.map((tile) => {
@@ -50,14 +60,15 @@ export default function Stcards({ tiles }) {
               sm={6}
               md={4}
               key={tile.id}
+              dx={{ px: 1, py: 2 }}
             >
               <Card
                 onClick={() => isLoaded && handleClick(tile.id)}
                 sx={{
                   cursor: isLoaded ? "pointer" : "default",
                   transition: "transform 0.2s, box-shadow 0.2s",
-                  width: "300px",
-                  height: "200px",
+                  width: "350px",
+                  height: "87%",
                   display: "flex",
                   flexDirection: "column",
                   "&:hover": isLoaded && {
@@ -88,7 +99,7 @@ export default function Stcards({ tiles }) {
                     justifyContent: "center",
                   }}
                 >
-                  {isLoaded ? (
+                  {showTitles ? (
                     <Typography variant="h6" component="div">
                       {tile.title}
                     </Typography>
