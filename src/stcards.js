@@ -5,87 +5,106 @@ import {
   Grid,
   Typography,
   Box,
+  Skeleton,
 } from "@mui/material";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
+import { useState } from "react";
 
 export default function Stcards({ tiles }) {
-  // Accept tiles as a prop
+  const [loadedImages, setLoadedImages] = useState({});
+
   const handleClick = (id) => {
     console.log("Tile Clicked: ", id);
+  };
+
+  const handleImageLoad = (id) => {
+    setLoadedImages((prev) => ({ ...prev, [id]: true }));
   };
 
   return (
     <Box
       sx={{
-        height: "500px", // Set a fixed height for the scrollable container
-        overflowY: "auto", // Enable vertical scrolling
-        padding: 2, // Optional padding
-        display: "flex", // Use flexbox for centering
-        justifyContent: "center", // Center horizontally
-        alignItems: "center", // Center vertically
+        height: "500px",
+        overflowY: "auto",
+        padding: 2,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Grid
         container
-        spacing={3} // Increased spacing between rows and columns
+        spacing={3}
         sx={{
-          justifyContent: "center", // Center the grid items horizontally
+          justifyContent: "center",
         }}
       >
-        {tiles.map((tile, index) => (
-          <Grid
-            item
-            xs={12}
-            sx={{ px: 5, py: 2 }} // Added vertical padding (py) for more space between rows
-            sm={6}
-            md={4}
-            key={index}
-          >
-            <Card
-              onClick={() => handleClick(tile.id)}
-              sx={{
-                cursor: "pointer",
-                transition: "transform 0.2s, box-shadow 0.2s",
-                width: "300px", // Set a fixed width
-                height: "200px", // Set a fixed height
-                display: "flex",
-                flexDirection: "column", // Ensure content stacks vertically
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
-                },
-              }}
+        {tiles.map((tile) => {
+          const isLoaded = loadedImages[tile.id];
+
+          return (
+            <Grid
+              item
+              xs={12}
+              sx={{ px: 5, py: 2 }}
+              sm={6}
+              md={4}
+              key={tile.id}
             >
-              <CardMedia
-                component="img"
-                alt={tile.title}
-                height="200" // Set a fixed height for the image
-                image={tile.image}
+              <Card
+                onClick={() => isLoaded && handleClick(tile.id)}
                 sx={{
-                  objectFit: "cover", // Ensure the image covers the area
-                }}
-              />
-              <CardContent
-                sx={{
-                  flexGrow: 1, // Ensures content fills the remaining space
+                  cursor: isLoaded ? "pointer" : "default",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                  width: "300px",
+                  height: "200px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  flexDirection: "column",
+                  "&:hover": isLoaded && {
+                    transform: "scale(1.05)",
+                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                  },
                 }}
               >
-                <Typography variant="h6" component="div">
-                  {tile.title}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+                {!isLoaded && (
+                  <Skeleton variant="rectangular" height={200} width="100%" />
+                )}
+                <CardMedia
+                  component="img"
+                  alt={tile.title}
+                  height="200"
+                  image={tile.image}
+                  onLoad={() => handleImageLoad(tile.id)}
+                  sx={{
+                    objectFit: "cover",
+                    display: isLoaded ? "block" : "none",
+                  }}
+                />
+                <CardContent
+                  sx={{
+                    flexGrow: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {isLoaded ? (
+                    <Typography variant="h6" component="div">
+                      {tile.title}
+                    </Typography>
+                  ) : (
+                    <Skeleton width="60%" />
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );
 }
 
-// Add PropTypes validation [this is optional but recommended, only added to avoid warnings]
 Stcards.propTypes = {
   tiles: PropTypes.arrayOf(
     PropTypes.shape({

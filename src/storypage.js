@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Stcards from "./stcards";
+import { motion } from "framer-motion"; // Importing framer-motion for animations
 
 function Storypage() {
   const navigate = useNavigate();
@@ -83,7 +84,20 @@ function Storypage() {
   ];
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, x: -50 }}
+      animate={{
+        opacity: 1,
+        x: 0,
+        transition: { duration: 0.2, ease: "easeOut" },
+      }} // Animation duration
+      exit={{
+        opacity: 0,
+        x: 50,
+        transition: { duration: 0.2, ease: "easeIn" }, // Animation duration for exit
+      }}
+      //Animation
+
       style={{
         background: "linear-gradient(to bottom, #cce0ff,  #3385ff)", // Gradient background
         height: "100vh",
@@ -106,15 +120,14 @@ function Storypage() {
           >
             &lt; Home
           </Button>
-          <div
-          style={{padding: '15px',}}>
+          <div style={{ padding: "15px" }}>
             <h1>Story Page</h1>
             <p>This is the story page.</p>
           </div>
         </div>
         <Stcards tiles={tiles} />
       </Stack>
-    </div>
+    </motion.div>
   );
 }
 

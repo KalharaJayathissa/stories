@@ -1,6 +1,8 @@
 import Stcards from "./stcards";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import {useEffect,useState } from "react";
 
 export default function Types() {
   const navigate = useNavigate();
@@ -38,7 +40,19 @@ export default function Types() {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, x: -50 }}
+      animate={{
+        opacity: 1,
+        x: 0,
+        transition: { duration: 0.2, ease: "easeOut" },
+      }} // Animation duration
+      exit={{
+        opacity: 0,
+        x: 50,
+        transition: { duration: 0.2, ease: "easeIn" }, // Animation duration for exit
+      }}
+    >
       <Box
         className="container"
         sx={{
@@ -52,7 +66,11 @@ export default function Types() {
           overflow: "hidden",
         }}
       >
-        <h1 style={{ alignSelf: "flex-start", marginLeft: "15px" , color: 'cyan'}}>Hi</h1>
+        <h1
+          style={{ alignSelf: "flex-start", marginLeft: "15px", color: "cyan" }}
+        >
+          Hi
+        </h1>
 
         {/* Background Image */}
         <Box
@@ -89,6 +107,6 @@ export default function Types() {
           Read More..
         </Button>
       </Box>
-    </div>
+    </motion.div>
   );
 }
