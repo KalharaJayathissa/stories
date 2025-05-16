@@ -3,6 +3,8 @@ import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import PageFooter from "./PageFooter";
+import NavBar from "./NavBar";
 
 export default function Types() {
   const navigate = useNavigate();
@@ -53,6 +55,7 @@ export default function Types() {
         transition: { duration: 0.2, ease: "easeIn" }, // Animation duration for exit
       }}
     >
+      <NavBar />
       <Box
         className="container"
         sx={{
@@ -116,7 +119,9 @@ export default function Types() {
         >
           Read More..
         </Button>
+        <PageFooter />
       </Box>
+      
     </motion.div>
   );
 }

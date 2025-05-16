@@ -3,6 +3,7 @@ import { Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Stcards from "./stcards";
 import { motion } from "framer-motion"; // Importing framer-motion for animations
+import PageFooter from "./PageFooter";
 
 function Storypage() {
   const navigate = useNavigate();
@@ -122,11 +123,12 @@ function Storypage() {
           </Button>
           <div style={{ padding: "15px" }}>
             <h1>Story Page</h1>
-            <p>This is the story page.</p>
+            <p>Read all stories here..</p>
           </div>
         </div>
         <Stcards tiles={tiles} />
       </Stack>
+      <PageFooter />
     </motion.div>
   );
 }
