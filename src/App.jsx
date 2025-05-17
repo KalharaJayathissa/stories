@@ -5,37 +5,40 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import PageFooter from "./PageFooter";
 import NavBar from "./NavBar";
+import axios from "axios";
+import AddStoryDialog from "./Dialog.jsx";
 
-export default function Types() {
+export default function App() {
   const navigate = useNavigate();
 
   // Define the tiles array
-  const tiles = [
-    {
-      id: 1,
-      title: "A Journey Throus",
-      description: "A short story about discovery and survival.",
-      image: "https://picsum.photos/id/1018/400/200",
-    },
-    {
-      id: 2,
-      title: "The Silent City",
-      description: "Mystery unfolds in a city where time stands still.",
-      image: "https://picsum.photos/id/1025/400/200",
-    },
-    {
-      id: 3,
-      title: "Tales of the Ocean",
-      description: "Stories from sailors lost and found.",
-      image: "https://picsum.photos/id/1011/400/200",
-    },
-    {
-      id: 12,
-      title: "The Desert Mirage",
-      description: "A journey through the scorching sands.",
-      image: "https://picsum.photos/id/1104/400/200",
-    },
-  ];
+  const [tiles, setTiles] = useState([]);
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/stories");
+        setTiles(res.data);
+      } catch (error) {
+        console.error("Failed to fetch stories:", error);
+      }
+    };
+
+    fetchStories();
+  }, []);
+
+const handleAddStory = async (newStory) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/stories",
+      newStory
+    );
+    setTiles((prevTiles) => [response.data, ...prevTiles]); // Use response from backend
+  } catch (error) {
+    console.error("Failed to add story:", error);
+  }
+};
+
 
   const handleClick = () => {
     navigate("/storypage");
@@ -104,6 +107,7 @@ export default function Types() {
         {/* Pass the tiles array as a prop to Stcards */}
 
         <Stcards tiles={tiles} />
+        <AddStoryDialog onAddStory={handleAddStory} />
         <Button
           variant="contained"
           color="primary"
@@ -121,7 +125,6 @@ export default function Types() {
         </Button>
         <PageFooter />
       </Box>
-      
     </motion.div>
   );
 }
