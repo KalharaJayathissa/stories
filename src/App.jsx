@@ -7,9 +7,11 @@ import PageFooter from "./PageFooter";
 import NavBar from "./NavBar";
 import axios from "axios";
 import AddStoryDialog from "./Dialog.jsx";
+import { API_BASE_URL } from "./BackendUrl"; // Adjust the import path as necessary
 
 export default function App() {
   const navigate = useNavigate();
+  const channel = new BroadcastChannel("story-updates");
 
   // Define the tiles array
   const [tiles, setTiles] = useState([]);
@@ -17,7 +19,7 @@ export default function App() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/stories");
+        const res = await axios.get(`${API_BASE_URL}/api/stories`);
         setTiles(res.data);
       } catch (error) {
         console.error("Failed to fetch stories:", error);
@@ -25,20 +27,27 @@ export default function App() {
     };
 
     fetchStories();
+
+    // Listen for messages from the BroadcastChannel( IE.other tabs)
+    channel.onmessage = (event) => {
+      if (event.data.type === "NEW_STORY_ADDED") {
+        fetchStories(); // Refresh stories when a new story is added
+      }
+    };
   }, []);
 
-const handleAddStory = async (newStory) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:8080/api/stories",
-      newStory
-    );
-    setTiles((prevTiles) => [response.data, ...prevTiles]); // Use response from backend
-  } catch (error) {
-    console.error("Failed to add story:", error);
-  }
-};
-
+  const handleAddStory = async (newStory) => {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/api/stories`,
+        newStory
+      );
+      setTiles((prevTiles) => [response.data, ...prevTiles]); // Use response from backend
+      channel.postMessage({ type: "NEW_STORY_ADDED" });
+    } catch (error) {
+      console.error("Failed to add story:", error);
+    }
+  };
 
   const handleClick = () => {
     navigate("/storypage");
