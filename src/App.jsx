@@ -6,26 +6,38 @@ import { useEffect, useState } from "react";
 import PageFooter from "./PageFooter";
 import NavBar from "./NavBar";
 import axios from "axios";
+import AddStoryDialog from "./Dialog.jsx";
 
 export default function App() {
   const navigate = useNavigate();
 
   // Define the tiles array
- const [tiles, setTiles] = useState([]);
+  const [tiles, setTiles] = useState([]);
 
- useEffect(() => {
-   const fetchStories = async () => {
-     try {
-       const res = await axios.get("http://localhost:8080/api/stories");
-       setTiles(res.data);
-       
-     } catch (error) {
-       console.error("Failed to fetch stories:", error);
-     }
-   };
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/stories");
+        setTiles(res.data);
+      } catch (error) {
+        console.error("Failed to fetch stories:", error);
+      }
+    };
 
-   fetchStories();
- }, []);
+    fetchStories();
+  }, []);
+
+const handleAddStory = async (newStory) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/stories",
+      newStory
+    );
+    setTiles((prevTiles) => [response.data, ...prevTiles]); // Use response from backend
+  } catch (error) {
+    console.error("Failed to add story:", error);
+  }
+};
 
 
   const handleClick = () => {
@@ -95,6 +107,7 @@ export default function App() {
         {/* Pass the tiles array as a prop to Stcards */}
 
         <Stcards tiles={tiles} />
+        <AddStoryDialog onAddStory={handleAddStory} />
         <Button
           variant="contained"
           color="primary"
@@ -112,7 +125,6 @@ export default function App() {
         </Button>
         <PageFooter />
       </Box>
-      
     </motion.div>
   );
 }
