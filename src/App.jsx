@@ -7,7 +7,7 @@ import PageFooter from "./PageFooter";
 import NavBar from "./NavBar";
 import axios from "axios";
 
-export default function Types() {
+export default function App() {
   const navigate = useNavigate();
 
   // Define the tiles array
@@ -18,6 +18,7 @@ export default function Types() {
      try {
        const res = await axios.get("http://localhost:8080/api/stories");
        setTiles(res.data);
+       
      } catch (error) {
        console.error("Failed to fetch stories:", error);
      }
