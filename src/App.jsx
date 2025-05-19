@@ -9,20 +9,42 @@ import axios from "axios";
 import AddStoryDialog from "./Dialog.jsx";
 import { API_BASE_URL } from "./BackendUrl"; // Adjust the import path as necessary
 
+
+
+
+
 export default function App() {
   const navigate = useNavigate();
   const channel = new BroadcastChannel("story-updates");
 
   // Define the tiles array
   const [tiles, setTiles] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  let content;
+  if (loading) {
+    content = <p>Loading</p>;
+  } else if (error) {
+    content = <p>{error}</p>;
+  } else if (tiles.length === 0) {
+    content = <p>No availabel stories. Add new stories to read.</p>;
+  } else {
+    content = <Stcards tiles={tiles} />;
+  }
+
+  // Fetch stories from the backend
   useEffect(() => {
     const fetchStories = async () => {
       try {
         const res = await axios.get(`${API_BASE_URL}/api/stories`);
         setTiles(res.data);
+        setError(null);
       } catch (error) {
         console.error("Failed to fetch stories:", error);
+        setError("Backend is offline or something went wrong...");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -115,7 +137,8 @@ export default function App() {
         /> */}
         {/* Pass the tiles array as a prop to Stcards */}
 
-        <Stcards tiles={tiles} />
+        {content}
+
         <AddStoryDialog onAddStory={handleAddStory} />
         <Button
           variant="contained"
