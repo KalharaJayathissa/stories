@@ -38,7 +38,9 @@ export default function App() {
         setError(null);
       } catch (error) {
         console.error("Failed to fetch stories:", error);
-        setError("Backend is currently offline!");
+        setError(
+          "The backend is currently offline.\nPlease contact the relevant personnel."
+        );
       } finally {
         setLoading(false);
       }
