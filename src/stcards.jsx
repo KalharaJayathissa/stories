@@ -147,6 +147,7 @@ export default function Stcards({ tiles }) {
                     }}
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent card click
+                      
                       console.log("Update story:", tile.id);
                     }}
                   />
