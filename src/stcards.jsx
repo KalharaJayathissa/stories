@@ -28,10 +28,7 @@ export default function Stcards({ tiles }) {
     if (tile) {
       navigator.clipboard
         .writeText(tile.storyLink) // Copy the storyLink to the clipboard
-        .then(() => {
-          console.log(`Copied to clipboard: ${tile.storyLink}`);
-          alert("Story link copied to clipboard!");
-        })
+        
         .catch((error) => {
           console.error("Failed to copy story link to clipboard:", error);
         });
