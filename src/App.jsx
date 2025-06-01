@@ -20,7 +20,7 @@ export default function App() {
 
   // Generate a random background image
   const getRandomBackgroundImage = () => {
-    const randomNumber = Math.floor(Math.random() * 2) + 1; // Random number between 1 and 10
+    const randomNumber = Math.floor(Math.random() * 8) + 1; // Random number between 1 and 10
     return `/screen${randomNumber}.png`; // Path to the random background image
   };
 
