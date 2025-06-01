@@ -19,15 +19,7 @@ export default function DialogPopup({}) {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          <TextField
-            margin="dense"
-            label="Thumbnail URL"
-            type="url"
-            fullWidth
-            variant="standard"
-            value={thumbnailUrl}
-            onChange={(e) => setThumbnailUrl(e.target.value)}
-          />
+
           <TextField
             margin="dense"
             label="Story Link"

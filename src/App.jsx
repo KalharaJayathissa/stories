@@ -18,6 +18,16 @@ export default function App() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Generate a random background image
+  const getRandomBackgroundImage = () => {
+    const randomNumber = Math.floor(Math.random() * 2) + 1; // Random number between 1 and 10
+    return `/screen${randomNumber}.png`; // Path to the random background image
+  };
+
+  const [backgroundImage, setBackgroundImage] = useState(
+    getRandomBackgroundImage()
+  );
+
   let content;
   if (loading) {
     content = <p>Loading</p>;
@@ -87,7 +97,7 @@ export default function App() {
         transition: { duration: 0.2, ease: "easeIn" }, // Animation duration for exit
       }}
       style={{
-        backgroundImage: "url('/screen.png')", // Reference the image in the public folder
+        backgroundImage: `url(${backgroundImage})`, // Use the random background image
         backgroundSize: "cover", // Ensure the image covers the entire background
         backgroundPosition: "center", // Center the image
         backgroundRepeat: "no-repeat", // Prevent the image from repeating

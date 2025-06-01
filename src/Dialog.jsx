@@ -65,7 +65,7 @@ export default function AddStoryDialog({ onAddStory }) {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          <TextField
+          {/* <TextField
             margin="dense"
             label="Thumbnail URL"
             type="url"
@@ -73,7 +73,7 @@ export default function AddStoryDialog({ onAddStory }) {
             variant="standard"
             value={thumbnailUrl}
             onChange={(e) => setThumbnailUrl(e.target.value)}
-          />
+          /> */}
           <TextField
             margin="dense"
             label="Story Link"

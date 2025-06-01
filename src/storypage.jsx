@@ -13,6 +13,16 @@ function Storypage() {
   // Define the tiles array
   const [tiles, setTiles] = useState([]);
 
+  // Generate a random background image
+  const getRandomBackgroundImage = () => {
+    const randomNumber = Math.floor(Math.random() * 2) + 1; // Random number between 1 and 10
+    return `/screen${randomNumber}.png`; // Path to the random background image
+  };
+
+  const [backgroundImage, setBackgroundImage] = useState(
+    getRandomBackgroundImage()
+  );
+
   useEffect(() => {
     const fetchStories = async () => {
       try {
@@ -39,19 +49,17 @@ function Storypage() {
         x: 50,
         transition: { duration: 0.2, ease: "easeIn" }, // Animation duration for exit
       }}
-      //Animation
-
       style={{
-        background: "linear-gradient(to bottom, #cce0ff,  #3385ff)", // Gradient background
+        backgroundImage: `url(${backgroundImage})`, // Use the random background image
+        backgroundSize: "cover", // Ensure the image covers the entire background
+        backgroundPosition: "center", // Center the image
+        backgroundRepeat: "no-repeat", // Prevent the image from repeating
         height: "100vh",
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-
         alignItems: "center",
-        top: 0,
-        left: 0,
-        overflow: "auto", // Allows scrolling if content exceeds the viewport
+        justifyContent: "center",
       }}
     >
       <Stack spacing={2}>
@@ -63,14 +71,11 @@ function Storypage() {
           >
             &lt; Home
           </Button>
-          <div style={{ padding: "15px" }}>
-            
-            
-          </div>
+          <div style={{ padding: "15px" }}></div>
         </div>
         {tiles.length === 0 ? (
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <h2>Loading / No items availabele or Back end is offline.</h2>
+            <h2>Loading / No items available or Back end is offline.</h2>
           </div>
         ) : (
           <Stcards tiles={tiles} />
