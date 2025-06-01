@@ -10,7 +10,7 @@ import { API_BASE_URL } from "./BackendUrl"; // Adjust the import path as necess
 function Storypage() {
   const navigate = useNavigate();
 
-   // Define the tiles array
+  // Define the tiles array
   const [tiles, setTiles] = useState([]);
 
   useEffect(() => {
@@ -24,9 +24,7 @@ function Storypage() {
     };
 
     fetchStories();
-  }
-  , []);
-
+  }, []);
 
   return (
     <motion.div
@@ -66,16 +64,17 @@ function Storypage() {
             &lt; Home
           </Button>
           <div style={{ padding: "15px" }}>
-            <h1>Story Page</h1>
-            <p>Read all stories here..</p>
+            
+            
           </div>
         </div>
         {tiles.length === 0 ? (
-          <div style ={{ textAlign: "center", marginTop: "20px" }}>
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
             <h2>Loading / No items availabele or Back end is offline.</h2>
-            </div>):(<Stcards tiles={tiles} />)
-        }
-        
+          </div>
+        ) : (
+          <Stcards tiles={tiles} />
+        )}
       </Stack>
       <PageFooter />
     </motion.div>
