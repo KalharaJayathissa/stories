@@ -54,26 +54,11 @@ function Storypage() {
         justifyContent: "center",
       }}
     >
-      <Stack
-        spacing={-10}
-        sx={{
-          position: "fixed", // or "absolute" if inside a positioned parent
-          top: 0,
-          right: 0,
-          width: "10%",
-          height: "100vh", // full viewport height
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "flex-start", // or "center" if you want it centered vertically
-          padding: 7, // optional padding
-
-        }}
-      >
+      <Stack spacing={2}>
         <div style={{ textAlign: "left", margin: "20px" }}>
           <Button
             variant="contained"
-            color="white"
+            color="primary"
             onClick={() => navigate("/")}
           >
             &lt; Home

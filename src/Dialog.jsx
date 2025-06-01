@@ -11,10 +11,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-
-
-
-
 export default function AddStoryDialog({ onAddStory }) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -40,8 +36,8 @@ export default function AddStoryDialog({ onAddStory }) {
     <Box
       sx={{
         position: "fixed",
-        bottom: { xs: 90, sm: 24, md: 80 },
-        right: { xs: 80, sm: 24, md: 80 },
+        bottom: 5,
+        right: 5,
         zIndex: 1000,
       }}
     >
@@ -51,8 +47,25 @@ export default function AddStoryDialog({ onAddStory }) {
       </Fab>
 
       {/* Dialog Popup */}
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add New Story</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        BackdropProps={{
+          style: { backgroundColor: "transparent" }, // Prevent background dimming
+        }}
+        sx={{
+          "& .MuiDialog-paper": {
+            position: "absolute", // Position the dialog absolutely
+            bottom: 16, // Distance from the bottom of the screen
+            right: 16, // Distance from the right of the screen
+            width: "250px", // Set the width of the dialog
+            height: "210px", // Allow height to adjust based on content
+            maxWidth: "90%", // Ensure it doesn't exceed the viewport width
+            padding: 2, // Optional: Add padding inside the dialog
+            boxShadow: "none", // Remove the shadow
+          },
+        }}
+      >
         <DialogContent dividers>
           <TextField
             autoFocus
@@ -65,15 +78,6 @@ export default function AddStoryDialog({ onAddStory }) {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          {/* <TextField
-            margin="dense"
-            label="Thumbnail URL"
-            type="url"
-            fullWidth
-            variant="standard"
-            value={thumbnailUrl}
-            onChange={(e) => setThumbnailUrl(e.target.value)}
-          /> */}
           <TextField
             margin="dense"
             label="Story Link"
@@ -86,9 +90,7 @@ export default function AddStoryDialog({ onAddStory }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleAdd} variant="contained">
-            Add Story
-          </Button>
+          <Button onClick={handleAdd}>Add Story</Button>
         </DialogActions>
       </Dialog>
     </Box>

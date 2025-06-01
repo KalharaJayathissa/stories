@@ -3,7 +3,7 @@ import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import PageFooter from "./PageFooter";
+
 import NavBar from "./NavBar";
 import axios from "axios";
 import AddStoryDialog from "./Dialog.jsx";
@@ -109,6 +109,22 @@ export default function App() {
         justifyContent: "center",
       }}
     >
+      <Button
+        variant=""
+        color="primary"
+        onClick={handleClick}
+        sx={{
+          position: "absolute", // Position the button absolutely
+          top: 16, // Distance from the top of the screen
+          right: 16, // Distance from the right of the screen
+          padding: "16px 32px", // Increase padding for a larger button
+          fontSize: "1.00rem", // Increase font size
+          width: "auto", // Adjust width automatically
+          height: "auto", // Adjust height automatically
+        }}
+      >
+      >  {/* > this not error    */}
+      </Button>
       <Box>
         <AddStoryDialog onAddStory={handleAddStory} />
       </Box>

@@ -32,7 +32,11 @@ export default function DialogPopup({}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleAdd} variant="contained">
+          <Button
+            onClick={handleAdd}
+            variant="contained"
+            style={{ backgroundColor: 'transparent', color: 'black' }}
+          >
             Add Story
           </Button>
         </DialogActions>

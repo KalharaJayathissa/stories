@@ -63,6 +63,7 @@ export default function Stcards({ tiles }) {
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", // Dynamically adjust card size
         gap: 3,
+
         padding: 2,
         paddingLeft: { xs: 0, sm: 2 }, // Remove left padding for mobile screens
         justifyContent: { xs: "center", sm: "flex-start" }, // Center cards for mobile screens
@@ -70,7 +71,7 @@ export default function Stcards({ tiles }) {
     >
       <Grid
         container
-        spacing={3}
+        spacing={0}
         sx={{
           justifyContent: { xs: "center", sm: "flex-start" }, // Center grid items for mobile screens
         }}
