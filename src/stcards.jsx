@@ -96,7 +96,7 @@ export default function Stcards({ tiles }) {
                   sx={{
                     cursor: "pointer",
                     transition: "transform 0.2s, box-shadow 0.2s",
-                    width: 200, // Reduced width for mobile and small screens
+                    width: "100px", // Reduced width for mobile and small screens
                     height: "60px", // Reduced height
                     display: "flex",
                     flexDirection: "column",
@@ -122,6 +122,7 @@ export default function Stcards({ tiles }) {
                     height="75" // Adjust the height of the image
                     image={tile.thumbnailUrl}
                     onLoad={() => handleImageLoad(tile.id)}
+                    
                     sx={{
                       objectFit: "cover",
                       display: isLoaded ? "block" : "none",
@@ -144,16 +145,25 @@ export default function Stcards({ tiles }) {
                     )}
                   </CardContent>
                   <SpeedDial
-                    
                     ariaLabel="Story Actions"
                     sx={{
-                       // Set the icon color to white
+                      // Set the icon color to white
                       position: "absolute", // Position relative to the card
                       bottom: 16, // Place it near the bottom of the card
                       right: 16, // Place it near the right edge of the card
+                      "& .MuiFab-root": {
+                        width: 15, // set main button size
+                        height: 15,
+                        minHeight: "unset",
+                      },
                     }}
-                     // Set the icon color to white
-                     
+                    icon={
+                      <Typography variant="h5" fontWeight="bold" >
+                        x
+                      </Typography>
+                    }
+                    // Set the icon color to white
+
                     direction="left"
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}
