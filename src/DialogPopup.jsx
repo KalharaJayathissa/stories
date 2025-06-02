@@ -19,15 +19,7 @@ export default function DialogPopup({}) {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          <TextField
-            margin="dense"
-            label="Thumbnail URL"
-            type="url"
-            fullWidth
-            variant="standard"
-            value={thumbnailUrl}
-            onChange={(e) => setThumbnailUrl(e.target.value)}
-          />
+
           <TextField
             margin="dense"
             label="Story Link"
@@ -40,7 +32,11 @@ export default function DialogPopup({}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleAdd} variant="contained">
+          <Button
+            onClick={handleAdd}
+            variant="contained"
+            style={{ backgroundColor: 'transparent', color: 'black' }}
+          >
             Add Story
           </Button>
         </DialogActions>

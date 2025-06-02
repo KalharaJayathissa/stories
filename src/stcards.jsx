@@ -24,7 +24,15 @@ export default function Stcards({ tiles }) {
   const [storyTiles, setStoryTiles] = useState(tiles);
 
   const handleClick = (id) => {
-    console.log("Tile Clicked: ", id);
+    const tile = storyTiles.find((t) => t.id === id); // Find the tile by its ID
+    if (tile) {
+      navigator.clipboard
+        .writeText(tile.storyLink) // Copy the storyLink to the clipboard
+        
+        .catch((error) => {
+          console.error("Failed to copy story link to clipboard:", error);
+        });
+    }
   };
 
   const handleImageLoad = (id) => {
@@ -52,6 +60,7 @@ export default function Stcards({ tiles }) {
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", // Dynamically adjust card size
         gap: 3,
+
         padding: 2,
         paddingLeft: { xs: 0, sm: 2 }, // Remove left padding for mobile screens
         justifyContent: { xs: "center", sm: "flex-start" }, // Center cards for mobile screens
@@ -59,7 +68,7 @@ export default function Stcards({ tiles }) {
     >
       <Grid
         container
-        spacing={3}
+        spacing={0}
         sx={{
           justifyContent: { xs: "center", sm: "flex-start" }, // Center grid items for mobile screens
         }}
@@ -81,25 +90,26 @@ export default function Stcards({ tiles }) {
             >
               <Box sx={{ position: "relative" }}>
                 <Card
-                  onClick={() => isLoaded && handleClick(tile.id)}
+                  onClick={() => handleClick(tile.id)}
                   sx={{
-                    cursor: isLoaded ? "pointer" : "default",
+                    cursor: "pointer",
                     transition: "transform 0.2s, box-shadow 0.2s",
-                    width: { xs: "300px", sm: "300px" }, // Smaller width for mobile screens
-                    height: "200px", // Adjust height dynamically for mobile screens
+                    width: "100px", // Reduced width for mobile and small screens
+                    height: "60px", // Reduced height
                     display: "flex",
                     flexDirection: "column",
                     margin: { xs: "0 auto", sm: "0 auto" }, // Center cards horizontally on mobile screens
-                    "&:hover": isLoaded && {
-                      transform: "scale(1.05)",
-                      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                    position: "relative", // Ensure the SpeedDial is positioned relative to the card
+                    "&:hover": {
+                      transform: "scale(1.05)", // Scale up the card
+                      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)", // Add shadow effect
                     },
                   }}
                 >
                   {!isLoaded && (
                     <Skeleton
                       variant="rectangular"
-                      height={200}
+                      height={180} // Match the reduced height
                       width="100%"
                       sx={{ borderRadius: "4px" }} // Add rounded corners to the skeleton
                     />
@@ -107,9 +117,10 @@ export default function Stcards({ tiles }) {
                   <CardMedia
                     component="img"
                     alt={tile.title}
-                    height="150"
+                    height="75" // Adjust the height of the image
                     image={tile.thumbnailUrl}
                     onLoad={() => handleImageLoad(tile.id)}
+                    
                     sx={{
                       objectFit: "cover",
                       display: isLoaded ? "block" : "none",
@@ -131,47 +142,63 @@ export default function Stcards({ tiles }) {
                       <Skeleton width="60%" />
                     )}
                   </CardContent>
+                  <SpeedDial
+                    ariaLabel="Story Actions"
+                    sx={{
+                      // Set the icon color to white
+                      position: "absolute", // Position relative to the card
+                      bottom: 16, // Place it near the bottom of the card
+                      right: 16, // Place it near the right edge of the card
+                      "& .MuiFab-root": {
+                        width: 15, // set main button size
+                        height: 15,
+                        minHeight: "unset",
+                      },
+                    }}
+                    icon={
+                      <Typography variant="h5" fontWeight="bold" >
+                        x
+                      </Typography>
+                    }
+                    // Set the icon color to white
+
+                    direction="left"
+                    onClose={() => setOpen(false)}
+                    onOpen={() => setOpen(true)}
+                  >
+                    <SpeedDialAction
+                      icon={<EditIcon />}
+                      slotProps={{
+                        tooltip: { title: "Update" },
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent card click
+                        console.log("Update story:", tile.id);
+                      }}
+                    />
+                    <SpeedDialAction
+                      icon={<DeleteIcon />}
+                      slotProps={{
+                        tooltip: { title: "Delete" },
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log("Delete story:", tile.id);
+                        setStoryTiles((prev) =>
+                          prev.filter((t) => t.id !== tile.id)
+                        ); // Remove immediately
+                        axios
+                          .delete(`${API_BASE_URL}/api/stories/${tile.id}`)
+                          .then((res) => {
+                            console.log("Story deleted:", tile.id);
+                          })
+                          .catch((error) => {
+                            console.error("Error deleting story:", error);
+                          });
+                      }}
+                    />
+                  </SpeedDial>
                 </Card>
-                <SpeedDial
-                  ariaLabel="Story Actions"
-                  sx={{ position: "absolute", top: -28, right: 8 }}
-                  icon={<SpeedDialIcon />}
-                  direction="up"
-                  onClose={() => setOpen(false)}
-                  onOpen={() => setOpen(true)}
-                >
-                  <SpeedDialAction
-                    icon={<EditIcon />}
-                    slotProps={{
-                      tooltip: { title: "Update" },
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent card click
-                      
-                      console.log("Update story:", tile.id);
-                    }}
-                  />
-                  <SpeedDialAction
-                    icon={<DeleteIcon />}
-                    slotProps={{
-                      tooltip: { title: "Delete" },
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log("Delete story:", tile.id);
-                      setStoryTiles((prev) => prev.filter((t) => t.id !== tile.id)); // remove immediately
-                      axios
-                        .delete(`${API_BASE_URL}/api/stories/${tile.id}`)
-                        .then((res) => {
-                          console.log("Story deleted:", tile.id);
-                          // Optionally, you can update the UI or state here
-                        })
-                        .catch((error) => {
-                          console.error("Error deleting story:", error);
-                        });
-                    }}
-                  />
-                </SpeedDial>
               </Box>
             </Grid>
           );
