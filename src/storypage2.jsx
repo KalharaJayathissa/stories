@@ -3,7 +3,6 @@ import { Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Stcards from "./stcards";
 import { motion } from "framer-motion"; // Importing framer-motion for animations
-
 import axios from "axios";
 import { API_BASE_URL } from "./BackendUrl"; // Adjust the import path as necessary
 
@@ -12,6 +11,16 @@ function Storypage() {
 
   // Define the tiles array
   const [tiles, setTiles] = useState([]);
+
+  // Generate a random background image
+  const getRandomBackgroundImage = () => {
+    const randomNumber = Math.floor(Math.random() * 8) + 1; // Random number between 1 and 8
+    return `/screen${randomNumber}.png`; // Path to the random background image
+  };
+
+  const [backgroundImage, setBackgroundImage] = useState(
+    getRandomBackgroundImage()
+  );
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -39,10 +48,8 @@ function Storypage() {
         x: 50,
         transition: { duration: 0.2, ease: "easeIn" }, // Animation duration for exit
       }}
-      //Animation
-
       style={{
-        backgroundImage: "url('/screen.png')", // Reference the image in the public folder
+        backgroundImage: `url(${backgroundImage})`, // Use the random background image
         backgroundSize: "cover", // Ensure the image covers the entire background
         backgroundPosition: "center", // Center the image
         backgroundRepeat: "no-repeat", // Prevent the image from repeating
@@ -67,13 +74,12 @@ function Storypage() {
         </div>
         {tiles.length === 0 ? (
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <h2>Loading / No items availabele or Back end is offline.</h2>
+            <h2>Loading / No items available or Back end is offline.</h2>
           </div>
         ) : (
           <Stcards tiles={tiles} />
         )}
       </Stack>
-      
     </motion.div>
   );
 }
